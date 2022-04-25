@@ -7,7 +7,7 @@ createServer((clientReq, clientRes) => {
     port: 8080,
     method: clientReq.method,
     path: clientReq.url,
-    headers: { 'X-Forwarded-Proto': 'https' }
+    headers: Object.assign(clientReq.headers, { 'X-Forwarded-Proto': 'https' })
   }).on('error', () => clientRes.writeHead(502).end())
     .on('timeout', () => clientRes.writeHead(504).end())
     .on('response', serverRes => {
